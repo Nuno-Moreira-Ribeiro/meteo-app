@@ -1,0 +1,104 @@
+@mixin flexMid($justify : center) {
+    display: flex;
+    justify-content: $justify;
+    align-items: center;
+}
+
+@mixin blured($r: 0, $g: 0, $b: 0, $intensity: 10px) {
+    backdrop-filter: blur($intensity);
+    -webkit-backdrop-filter: blur($intensity);
+    background: rgba($r, $g, $b, 0.4);
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url("../Assets/bg.jpg");
+    background-repeat: round;
+}
+
+.main {
+    width: 100vw;
+    height: 100vh;
+    @include flexMid();
+}
+
+.container {
+    width: 50vw;
+    height: 80vh;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(90deg, rgba(9, 23, 215, 0.818) 6%, rgba(2, 157, 218, 0.698) 100%);
+    border-radius: 50px;
+}
+
+.search {
+    margin-top: 1%;
+    display: flex;
+    align-items: start;
+    width: 30vw;
+    height: 8vh;
+    border-radius: 50px;
+    background-color: rgba(0, 0, 0, 0.322);
+
+}
+
+.cityInput {
+    width: 80%;
+    height: 100%;
+    margin: 0;
+    margin-left: 2%;
+    background-color: transparent;
+    font-size: xx-large;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    color: whitesmoke;
+
+}
+
+.searchLoupe {
+    margin: 0;
+    border: hidden;
+    background-color: transparent;
+    width: 20%;
+    height: 100%;
+}
+
+.searchLoupe:hover {
+    cursor: pointer;
+}
+
+#imgLoupe {
+    height: 70%;
+}
+
+.informationsWeather {
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.temperatureInfo {
+    text-align: center;
+    margin: 0;
+    font-family:Roboto;
+}
+
+.tempCelsius{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.minmax{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
