@@ -5,13 +5,21 @@ import nuage from '../Assets/cloud.png'
 import soleil from '../Assets/clear.png'
 import pluie from '../Assets/drizzle.png'
 import neige from '../Assets/snow.png'
+import rien from '../Assets/rien.png'
+import config from '../../config.js';
+
 
 const MeteoApp = () => {
 
-    const api_key = "998c0e7c5cda1b60e201fed561fd45a4";
+    const api_key = config.apiKey;
+    const [wicon, setWicon] = useState(rien);
+    const [description, setDescription] = useState("");
 
-    const [wicon, setWicon] = useState(nuage);
-    const [description, setDescription] = useState("Ensoleillé");
+    document.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            search();
+        }
+    });
 
     function setImgAndDescription(data) {
         if (data.weather[0].icon === "01d" || data.weather[0].icon === "01n" || data.weather[0].icon === "02d" || data.weather[0].icon === "02n") {
@@ -44,8 +52,10 @@ const MeteoApp = () => {
             const temperature = document.getElementsByClassName("temperatre");
             const minTemp = document.getElementsByClassName("minTemp");
             const maxTemp = document.getElementsByClassName("maxTemp");
+            const sepMinMax = document.getElementsByClassName("sepMinMax");
             temperature[0].innerHTML = data.main.temp + "°C";
             minTemp[0].innerHTML = data.main.temp_min + "°C";
+            sepMinMax[0].innerHTML = " - ";
             maxTemp[0].innerHTML = data.main.temp_max + "°C";
             setImgAndDescription(data);
         } catch (error) {
@@ -70,7 +80,7 @@ const MeteoApp = () => {
                     <h1 className='temperatureInfo temperatre'> </h1>
                     <div className="minmax">
                         <h3 className='temperatureInfo minTemp' > </h3>
-                        <h3 className='temperatureInfo ' > </h3>
+                        <h3 className='temperatureInfo sepMinMax' > </h3>
                         <h3 className='temperatureInfo maxTemp' > </h3>
                     </div>
                 </div>

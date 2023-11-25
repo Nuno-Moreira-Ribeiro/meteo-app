@@ -1,0 +1,22 @@
+@mixin flexTop($justify : center) {
+    display: flex;
+    justify-content: $justify;
+    align-items: center;
+}
+
+.DateContainer{
+    width: 25vw;
+    height: 100vh;
+    @include flexTop(start);
+    flex-direction: column;
+
+}
+
+
+.date{
+    color: whitesmoke;
+}
+
+.time{
+    color: whitesmoke;
+}
