@@ -6,6 +6,8 @@ import soleil from '../Assets/clear.png'
 import pluie from '../Assets/drizzle.png'
 import neige from '../Assets/snow.png'
 import rien from '../Assets/rien.png'
+import vent from '../Assets/wind.png'
+import humidite from '../Assets/humidity.png'
 import config from '../../config.js';
 
 
@@ -13,6 +15,8 @@ const MeteoApp = () => {
 
     const api_key = config.apiKey;
     const [wicon, setWicon] = useState(rien);
+    const [humidIcon, setHumidIcon] = useState(rien);
+    const [windIcon, setWindIcon] = useState(rien);
     const [description, setDescription] = useState("");
 
     document.addEventListener("keypress", function (event) {
@@ -41,6 +45,10 @@ const MeteoApp = () => {
     }
 
     const search = async () => {
+        if (windIcon === rien) {
+            setWindIcon(vent);
+            setHumidIcon(humidite);
+        }
         const element = document.getElementsByClassName("cityInput");
         if (element[0].value === "") {
             return 0;
@@ -53,10 +61,14 @@ const MeteoApp = () => {
             const minTemp = document.getElementsByClassName("minTemp");
             const maxTemp = document.getElementsByClassName("maxTemp");
             const sepMinMax = document.getElementsByClassName("sepMinMax");
+            const wind = document.getElementsByClassName("wind");
+            const humidity = document.getElementsByClassName("humidity");
             temperature[0].innerHTML = data.main.temp + "°C";
             minTemp[0].innerHTML = data.main.temp_min + "°C";
             sepMinMax[0].innerHTML = " - ";
             maxTemp[0].innerHTML = data.main.temp_max + "°C";
+            humidity[0].innerHTML = data.main.humidity + "%";
+            wind[0].innerHTML = data.wind.speed + "km/h";
             setImgAndDescription(data);
         } catch (error) {
             console.error("Problème lors de la récuperation des données de la ville vérifier que la ville est correcte.")
@@ -82,6 +94,16 @@ const MeteoApp = () => {
                         <h3 className='temperatureInfo minTemp' > </h3>
                         <h3 className='temperatureInfo sepMinMax' > </h3>
                         <h3 className='temperatureInfo maxTemp' > </h3>
+                    </div>
+                    <div className="windHumid">
+                        <div className="windHumidContainer">
+                            <img className='logoWindHumid' src={windIcon} alt="vent logo" />
+                            <h3 className='infoWindHumid wind'> </h3>
+                        </div>
+                        <div className="windHumidContainer">
+                            <img className='logoWindHumid' src={humidIcon} alt="humidité logo" />
+                            <h3 className='infoWindHumid humidity'> </h3>
+                        </div>
                     </div>
                 </div>
             </div>

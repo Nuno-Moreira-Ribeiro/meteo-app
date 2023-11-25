@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './DateApp.scss'
 
-const Heure = new Date();
-
-let minutes = Heure.getMinutes();
-
-if (minutes !== Heure.getMinutes()) {
-}
-
-
 function DateApp() {
+
+    const [Heure, setHeure] = useState(new Date());
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setHeure(new Date());
+        }, 600);
+
+        return () => clearInterval(intervalId);
+    }, []);
+
     return (
         <div className="DateContainer">
             <h1 className='date'>{Heure.getDate()}/{Heure.getMonth()}/{Heure.getFullYear()}</h1>
