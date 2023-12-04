@@ -13,7 +13,6 @@ import locationIcon from '../Assets/Locationcircle.svg'
 
 const MeteoApp = () => {
     const api_key = process.env.REACT_APP_API_KEY;
-    console.log(api_key)
     const [wicon, setWicon] = useState(rien);
     const [humidIcon, setHumidIcon] = useState(rien);
     const [windIcon, setWindIcon] = useState(rien);
@@ -83,8 +82,7 @@ const MeteoApp = () => {
 
     const searchLoc = async () => {
         try {
-            getLatLong();
-            //PB sur le lat et le long qui sont des undifined ???
+            const { lat, long } = await getLatLong();
             let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${api_key}&units=metric`;
             let response = await fetch(url);
             let data = await response.json();
@@ -92,7 +90,9 @@ const MeteoApp = () => {
         } catch (error) {
             console.error("Problème lors de la récuperation des données de la ville vérifier que la ville est correcte.");
         }
-    }
+        console.log(lat + " gfff" + long)
+    };
+
 
     const search = async () => {
         const element = document.getElementsByClassName("cityInput");

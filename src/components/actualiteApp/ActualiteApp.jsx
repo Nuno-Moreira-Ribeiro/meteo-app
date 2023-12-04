@@ -14,7 +14,6 @@ const ActualiteApp = () => {
                 const response = await axios.get(url);
 
                 if (response.data.articles) {
-                    console.log(response.data.articles)
                     setNews(response.data.articles);
                 }
             } catch (error) {
