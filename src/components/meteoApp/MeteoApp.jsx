@@ -8,22 +8,59 @@ import neige from '../Assets/snow.png'
 import rien from '../Assets/rien.png'
 import vent from '../Assets/wind.png'
 import humidite from '../Assets/humidity.png'
-import config from '../../config.js';
+import locationIcon from '../Assets/Locationcircle.svg'
 
 
 const MeteoApp = () => {
-
-    const api_key = config.apiKey;
+    const api_key = process.env.REACT_APP_API_KEY;
+    console.log(api_key)
     const [wicon, setWicon] = useState(rien);
     const [humidIcon, setHumidIcon] = useState(rien);
     const [windIcon, setWindIcon] = useState(rien);
     const [description, setDescription] = useState("");
+    var lat;
+    var long;
 
     document.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
             search();
         }
     });
+
+    function getLatLong() {
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    lat = position.coords.latitude;
+                    long = position.coords.longitude;
+                    resolve({ lat, long });
+                },
+                error => {
+                    reject(error);
+                }
+            );
+        });
+    }
+
+    function updateData(data) {
+        const temperature = document.getElementsByClassName("temperatre");
+        const minTemp = document.getElementsByClassName("minTemp");
+        const maxTemp = document.getElementsByClassName("maxTemp");
+        const sepMinMax = document.getElementsByClassName("sepMinMax");
+        const wind = document.getElementsByClassName("wind");
+        const humidity = document.getElementsByClassName("humidity");
+        temperature[0].innerHTML = data.main.temp + "°C";
+        minTemp[0].innerHTML = data.main.temp + "°C";
+        sepMinMax[0].innerHTML = " - ";
+        maxTemp[0].innerHTML = data.main.temp_max + "°C";
+        humidity[0].innerHTML = data.main.humidity + "%";
+        wind[0].innerHTML = data.wind.speed + "km/h";
+        setImgAndDescription(data);
+        if (windIcon === rien) {
+            setWindIcon(vent);
+            setHumidIcon(humidite);
+        }
+    }
 
     function setImgAndDescription(data) {
         if (data.weather[0].icon === "01d" || data.weather[0].icon === "01n" || data.weather[0].icon === "02d" || data.weather[0].icon === "02n") {
@@ -44,11 +81,20 @@ const MeteoApp = () => {
         }
     }
 
-    const search = async () => {
-        if (windIcon === rien) {
-            setWindIcon(vent);
-            setHumidIcon(humidite);
+    const searchLoc = async () => {
+        try {
+            getLatLong();
+            //PB sur le lat et le long qui sont des undifined ???
+            let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${api_key}&units=metric`;
+            let response = await fetch(url);
+            let data = await response.json();
+            updateData(data);
+        } catch (error) {
+            console.error("Problème lors de la récuperation des données de la ville vérifier que la ville est correcte.");
         }
+    }
+
+    const search = async () => {
         const element = document.getElementsByClassName("cityInput");
         if (element[0].value === "") {
             return 0;
@@ -57,19 +103,7 @@ const MeteoApp = () => {
             let url = `https://api.openweathermap.org/data/2.5/weather?q=${element[0].value}&units=Metric&appid=${api_key}`;
             let response = await fetch(url);
             let data = await response.json();
-            const temperature = document.getElementsByClassName("temperatre");
-            const minTemp = document.getElementsByClassName("minTemp");
-            const maxTemp = document.getElementsByClassName("maxTemp");
-            const sepMinMax = document.getElementsByClassName("sepMinMax");
-            const wind = document.getElementsByClassName("wind");
-            const humidity = document.getElementsByClassName("humidity");
-            temperature[0].innerHTML = data.main.temp + "°C";
-            minTemp[0].innerHTML = data.main.temp_min + "°C";
-            sepMinMax[0].innerHTML = " - ";
-            maxTemp[0].innerHTML = data.main.temp_max + "°C";
-            humidity[0].innerHTML = data.main.humidity + "%";
-            wind[0].innerHTML = data.wind.speed + "km/h";
-            setImgAndDescription(data);
+            updateData(data);
         } catch (error) {
             console.error("Problème lors de la récuperation des données de la ville vérifier que la ville est correcte.")
         }
@@ -78,9 +112,15 @@ const MeteoApp = () => {
     return (
         <div className='container'>
             <div className="search">
-                <input type="text" className='cityInput' placeholder='recherche' />
-                <button className='searchLoupe' type='submit' onClick={() => { search() }}>
-                    <img id="imgLoupe" src={rechercheLoupe} alt=" loupe de recherche" draggable="false" />
+                <div className="leftBarToCenter"></div>
+                <div className="searchBar">
+                    <input type="text" className='cityInput' placeholder='Recherche' />
+                    <button className='searchLoupe' type='submit' onClick={() => { search() }}>
+                        <img id="imgSearch" src={rechercheLoupe} alt=" loupe de recherche" draggable="false" />
+                    </button>
+                </div>
+                <button type="submit" className='searchLoupe' onClick={() => { searchLoc() }}>
+                    <img id="imgSearchLoc" src={locationIcon} alt="Localisation pour la recherche" />
                 </button>
             </div>
             <div className="informationsWeather">
@@ -108,7 +148,7 @@ const MeteoApp = () => {
                 </div>
             </div>
 
-        </div>
+        </div >
     );
 }
 

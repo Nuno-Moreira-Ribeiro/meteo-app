@@ -1,0 +1,31 @@
+//  width: 23vw;
+//     margin-left: 1%;
+//     height: 80vh;
+//     background-color: rgba(240, 248, 255, 0.822);
+//     border-radius: 15px;
+//     display: flex;
+//     flex-direction: column;
+
+.newsContainer{
+    width: 30vw;
+    height: 20vh;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2%;
+    padding: 1%;
+    margin-right: 2%;
+    align-items: center;
+}
+
+h2{
+    font-size: 1rem;
+    margin-right: 8%;
+}
+
+#imgNews{
+    width: 13vh;
+    height: 13vh;
+    margin-right: 1%;
+}
