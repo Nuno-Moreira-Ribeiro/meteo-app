@@ -9,7 +9,7 @@ import rien from '../Assets/rien.png'
 import vent from '../Assets/wind.png'
 import humidite from '../Assets/humidity.png'
 import locationIcon from '../Assets/Locationcircle.svg'
-
+import lune from '../Assets/nuit.png'
 
 const MeteoApp = () => {
     const api_key = process.env.REACT_APP_API_KEY;
@@ -62,18 +62,22 @@ const MeteoApp = () => {
     }
 
     function setImgAndDescription(data) {
-        if (data.weather[0].icon === "01d" || data.weather[0].icon === "01n" || data.weather[0].icon === "02d" || data.weather[0].icon === "02n") {
+        if (data.weather[0].icon === "01d" || data.weather[0].icon === "02d") {
             setWicon(soleil);
             setDescription("Ensoleillé");
-        } else if (data.weather[0].icon === "03d" || data.weather[0].icon === "03n" || data.weather[0].icon === "04d" || data.weather[0].icon === "04n") {
+        } else if (data.weather[0].icon === "03d" || data.weather[0].icon === "04d") {
             setWicon(nuage);
             setDescription("Nuageux");
-        } else if (data.weather[0].icon === "09d" || data.weather[0].icon === "09n" || data.weather[0].icon === "10d" || data.weather[0].icon === "10n") {
+        } else if (data.weather[0].icon === "09d" || data.weather[0].icon === "10d") {
             setWicon(pluie);
             setDescription("Pluie");
-        } else if (data.weather[0].icon === "13d" || data.weather[0].icon === "13n") {
+        } else if (data.weather[0].icon === "13d") {
             setWicon(neige);
             setDescription("Neige");
+        } else if (data.weather[0].icon === "13n" || data.weather[0].icon === "01n" || data.weather[0].icon === "03n" || data.weather[0].icon === "09n" || data.weather[0].icon === "02n" || data.weather[0].icon === "04n" || data.weather[0].icon === "10n") {
+            setWicon(lune);
+            setDescription("Nuit");
+
         } else {
             setWicon(nuage);
             setDescription("Nuageux");
@@ -90,7 +94,6 @@ const MeteoApp = () => {
         } catch (error) {
             console.error("Problème lors de la récuperation des données de la ville vérifier que la ville est correcte.");
         }
-        console.log(lat + " gfff" + long)
     };
 
 
