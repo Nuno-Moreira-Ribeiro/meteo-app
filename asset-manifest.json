@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/meteo-app/static/css/main.8c39e7b0.css",
+    "main.js": "/meteo-app/static/js/main.a6f66cb6.js",
+    "static/js/787.79cb09ec.chunk.js": "/meteo-app/static/js/787.79cb09ec.chunk.js",
+    "static/media/bg.jpg": "/meteo-app/static/media/bg.a05e212925b088c5e968.jpg",
+    "static/media/nuit.png": "/meteo-app/static/media/nuit.a1db9b12aa8dd3af9fc8.png",
+    "static/media/cloud.png": "/meteo-app/static/media/cloud.20f353f873a9b27949a9.png",
+    "static/media/Locationcircle.svg": "/meteo-app/static/media/Locationcircle.a5cbda4a656976d6d583f9a749789c67.svg",
+    "index.html": "/meteo-app/index.html",
+    "static/media/search.svg": "/meteo-app/static/media/search.7d652047c7eb9ba36b753b566dcd5796.svg",
+    "main.8c39e7b0.css.map": "/meteo-app/static/css/main.8c39e7b0.css.map",
+    "main.a6f66cb6.js.map": "/meteo-app/static/js/main.a6f66cb6.js.map",
+    "787.79cb09ec.chunk.js.map": "/meteo-app/static/js/787.79cb09ec.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8c39e7b0.css",
+    "static/js/main.a6f66cb6.js"
+  ]
+}
